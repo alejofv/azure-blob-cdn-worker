@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "azure-blob-cdn-worke",
+  "version": "1.0.0",
+  "description": "A Cloudflare Workers project used to handle requests to external blob storage on custom domains",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "alejof",
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
+}

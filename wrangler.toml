@@ -1,0 +1,6 @@
+name = "azure-blob-cdn-worker"
+type = "javascript"
+account_id = "175bd1ff268423049995f930883aacee"
+workers_dev = true
+route = ""
+zone_id = ""
