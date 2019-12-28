@@ -2,7 +2,7 @@
   "private": true,
   "name": "azure-blob-cdn-worke",
   "version": "1.0.0",
-  "description": "A Cloudflare Workers project used to handle requests to external blob storage on custom domains",
+  "description": "A Cloudflare Workers project used to route requests to external blob storage using custom domains",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
