@@ -1,11 +1,8 @@
+import AccountNames from '../accounts.json'
+
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event))
 })
-
-const ACCOUNT_NAMES = {
-  'blob.alejof.dev': 'alejofnetlify',
-  'blob.starkidsworld.co': 'starkidsco'
-}
 
 async function handleRequest(event) {
   if (event.request.method === 'GET') {
@@ -22,19 +19,20 @@ async function handleRequest(event) {
 }
 
 async function serveAsset(event) {
-  const url = new URL(event.request.url)
-  console.log(url)
-
-  const accountName = ACCOUNT_NAMES[url.host]
-  if (!accountName)
-    return new Response('Unrecognized host', { status: 400 })
-
   const cache = caches.default
   let response = await cache.match(event.request)
 
   if (!response) {
-    const containerUrl = `https://${accountName}.blob.core.windows.net`
-    response = await fetch(`${containerUrl}${url.pathname}`)
+    const url = new URL(event.request.url)
+
+    const accountName = AccountNames[url.host]
+    if (!accountName)
+      return new Response('Unrecognized host', { status: 400 })
+
+    const originUrl = `https://${accountName}.blob.core.windows.net${url.pathname}`
+    console.log('Fetching from origin: ' + originUrl)
+
+    response = await fetch(originUrl)
 
     const headers = { 'cache-control': 'public, max-age=14400' }
     response = new Response(response.body, { ...response, headers })
