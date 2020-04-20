@@ -25,11 +25,12 @@ async function serveAsset(event) {
   if (!response) {
     const url = new URL(event.request.url)
 
-    const accountName = AccountNames[url.host]
-    if (!accountName)
+    const account = AccountNames[url.host]
+    if (!account)
       return new Response('Unrecognized host', { status: 400 })
 
-    const originUrl = `https://${accountName}.blob.core.windows.net${url.pathname}`
+    const pathPrefix = account.pathPrefix || ""
+    const originUrl = `https://${account.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
     console.log('Fetching from origin: ' + originUrl)
 
     response = await fetch(originUrl)

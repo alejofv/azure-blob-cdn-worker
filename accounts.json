@@ -1,4 +1,16 @@
 {
-    "blob.alejof.dev": "alejofnetlify",
-    "blob.starkidsworld.co": "starkidsco"
+    "blob.alejof.dev": {
+        "name": "alejofnetlify"
+    },
+    "blob.starkidsworld.co": {
+        "name": "starkidsco"
+    },
+    "blob.nedewo.co": {
+        "name": "alejofstorage",
+        "pathPrefix": "/nedewo"
+    },
+    "resources.nedewo.co": {
+        "name": "alejofstorage",
+        "pathPrefix": "/nedewo"
+    }
 }
