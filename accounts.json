@@ -9,6 +9,10 @@
         "name": "alejofstorage",
         "pathPrefix": "/nedewo"
     },
+    "blob.inagotablepapel.co": {
+        "name": "alejofstorage",
+        "pathPrefix": "/inagotable"
+    },
     "resources.nedewo.co": {
         "name": "alejofstorage",
         "pathPrefix": "/nedewo"
