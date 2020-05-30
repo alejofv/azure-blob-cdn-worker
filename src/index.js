@@ -16,7 +16,7 @@ async function handleRequest(event) {
   }
 }
 
-const getAccountConfig = (host) => CDNKeys.get(host)
+const getAccountConfig = (host) => CDNKeys.get(host, "json")
 
 async function serveAsset(event) {
   const cache = caches.default
@@ -30,10 +30,9 @@ async function serveAsset(event) {
     if (!config)
       return new Response('Unrecognized host', { status: 400 })
 
-    const account = JSON.parse(config)
-    const pathPrefix = account.pathPrefix || ""
-    const originUrl = `https://${account.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
-    
+    const pathPrefix = config.pathPrefix || ""
+    const originUrl = `https://${config.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
+
     console.debug('Fetching from origin: ' + originUrl)
     response = await fetch(originUrl)
 
