@@ -16,6 +16,8 @@ async function handleRequest(event) {
   }
 }
 
+const getAccountConfig = (host) => CDNKeys.get(host)
+
 async function serveAsset(event) {
   const cache = caches.default
   let response = await cache.match(event.request)
@@ -23,14 +25,16 @@ async function serveAsset(event) {
   if (!response) {
     const url = new URL(event.request.url)
 
-    const account = () => CDNKeys.get(url.host)
-    if (!account)
+    console.debug(`Getting config for ${url.host}`)
+    const config = await getAccountConfig(url.host)
+    if (!config)
       return new Response('Unrecognized host', { status: 400 })
 
+    const account = JSON.parse(config)
     const pathPrefix = account.pathPrefix || ""
     const originUrl = `https://${account.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
-    console.log('Fetching from origin: ' + originUrl)
-
+    
+    console.debug('Fetching from origin: ' + originUrl)
     response = await fetch(originUrl)
 
     const headers = { 'cache-control': 'public, max-age=14400' }
