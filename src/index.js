@@ -25,7 +25,7 @@ async function serveAsset(event) {
   if (!response) {
     const url = new URL(event.request.url)
 
-    console.debug(`Getting config for ${url.host}`)
+    console.log(`Getting config for ${url.host}`)
     const config = await getAccountConfig(url.host)
     if (!config)
       return new Response('Unrecognized host', { status: 400 })
@@ -33,7 +33,7 @@ async function serveAsset(event) {
     const pathPrefix = config.pathPrefix || ""
     const originUrl = `https://${config.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
 
-    console.debug('Fetching from origin: ' + originUrl)
+    console.log('Fetching from origin: ' + originUrl)
     response = await fetch(originUrl)
 
     const headers = { 'cache-control': 'public, max-age=14400' }
