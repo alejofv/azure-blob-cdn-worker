@@ -1,5 +1,3 @@
-import AccountNames from '../accounts.json'
-
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event))
 })
@@ -25,7 +23,7 @@ async function serveAsset(event) {
   if (!response) {
     const url = new URL(event.request.url)
 
-    const account = AccountNames[url.host]
+    const account = () => CDNKeys.get(url.host)
     if (!account)
       return new Response('Unrecognized host', { status: 400 })
 

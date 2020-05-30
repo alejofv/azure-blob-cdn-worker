@@ -2,6 +2,10 @@ name = "azure-blob-cdn-worker"
 type = "webpack"
 
 account_id = "175bd1ff268423049995f930883aacee"
-workers_dev = true
+workers_dev = false
 route = ""
 zone_id = ""
+
+kv-namespaces = [
+    { binding = "CDNKeys", id = "7f5135f9afb14a74973add64c93f102e" }
+]
