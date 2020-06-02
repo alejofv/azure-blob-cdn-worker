@@ -36,10 +36,14 @@ async function serveAsset(event) {
     console.log('Fetching from origin: ' + originUrl)
     response = await fetch(originUrl)
 
-    const headers = { 'cache-control': 'public, max-age=14400' }
+    // Aggresive cache: 7 days, inmutable
+    const headers = { 'cache-control': 'public, max-age=604800, immutable' }
     response = new Response(response.body, { ...response, headers })
-    
-    event.waitUntil(cache.put(event.request, response.clone()))
+
+    // Save successful responses in the cache - avoid caching temporary 404's or similar
+    if (response.status == 200) {
+      event.waitUntil(cache.put(event.request, response.clone()))
+    }
   }
   return response
 }
