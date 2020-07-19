@@ -32,9 +32,18 @@ async function serveAsset(event) {
 
     const pathPrefix = config.pathPrefix || ""
     const originUrl = `https://${config.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
+    const cacheMaxAge = config.cacheMaxAge || "31536000"
 
     console.log('Fetching from origin: ' + originUrl)
     response = await fetch(originUrl)
+
+    // Aggresive cache: 7 days, inmutable
+    if (!request.headers.has('cache-control')) {
+      const headers = request.headers
+      headers.set('cache-control', `public, max-age=${cacheMaxAge}, immutable`)
+      
+      response = new Response(response.body, { ...response, headers })
+    }
 
     // Save successful responses in the cache - avoid caching temporary 404's or similar
     if (response.status == 200) {
