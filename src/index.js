@@ -37,18 +37,12 @@ async function serveAsset(event) {
     console.log('Fetching from origin: ' + originUrl)
     response = await fetch(originUrl)
 
-    // Aggresive cache: 7 days, inmutable
-    if (!response.headers.has('cache-control')) {
-      const headers = {
-        ...response.headers,
-        'cache-control': `public, max-age=${cacheMaxAge}, immutable`
-      }
-
-      response = new Response(response.body, { ...response, headers })
-    }
-
-    // Save successful responses in the cache - avoid caching temporary 404's or similar
     if (response.status == 200) {
+      // Aggresive cache: 7 days, inmutable
+      response = new Response(response.body, response)
+      response.headers.set('cache-control', `public, max-age=${cacheMaxAge}, immutable`)
+
+      // Save successful responses in the cache - avoid caching temporary 404's or similar
       event.waitUntil(cache.put(event.request, response.clone()))
     }
   }
