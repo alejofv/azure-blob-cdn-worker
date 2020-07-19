@@ -38,10 +38,12 @@ async function serveAsset(event) {
     response = await fetch(originUrl)
 
     // Aggresive cache: 7 days, inmutable
-    if (!request.headers.has('cache-control')) {
-      const headers = request.headers
-      headers.set('cache-control', `public, max-age=${cacheMaxAge}, immutable`)
-      
+    if (!response.headers.has('cache-control')) {
+      const headers = {
+        ...response.headers,
+        'cache-control': `public, max-age=${cacheMaxAge}, immutable`
+      }
+
       response = new Response(response.body, { ...response, headers })
     }
 
