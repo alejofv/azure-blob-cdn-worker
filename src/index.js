@@ -31,7 +31,7 @@ async function serveAsset(event) {
       return new Response('Unrecognized host', { status: 400 })
 
     const pathPrefix = config.pathPrefix || ""
-    const originUrl = `https://${config.name}.blob.core.windows.net${pathPrefix}${url.pathname}`
+    const originUrl = `https://${config.name}.blob.core.windows.net${pathPrefix}${url.pathname}${url.search}`
     const cacheMaxAge = config.cacheMaxAge || "31536000"
 
     console.log('Fetching from origin: ' + originUrl)
