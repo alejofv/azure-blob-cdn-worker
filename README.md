@@ -10,7 +10,7 @@ This worker can run on multiple routes and domains, and uses a KV namespace to m
 
 i.e., having:
 
-* This Worker running on custom route `blob.mydomain.com
+* This Worker running on custom route `blob.mydomain.com` 
 * A KV entry: `"blob.mydomain.com": { "name": "my-az-account", "pathPrefix": "/container" }`
 
 A GET request to `blob.mydomain.com/image.png` will be routed to `https://my-az-account.blob.core.windows.net/container/image.png`
